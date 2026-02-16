@@ -1,0 +1,92 @@
+import User from "../models/User.js";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+// token generation 
+const genToken = (userId)=>{
+      const token = jwt.sign({userId},process.env.JWT_SECRET_KEY,{expiresIn:"7d"});
+      return token;
+}
+
+// POST :-- /api/users/register
+export const registerUser = async(req,res)=>{
+    try {
+        const {name,email,password} = req.body;
+        // check if required files 
+        if(!name || !email || !password){
+            return res.status(400).json({message:"Missing required fields"});
+        }
+        // user already exists or not
+        const user = await User.findOne({email});
+        if(user){
+            return res.status(400).json({message:"User already exists"});
+        }
+
+        // password hashed 
+        const hashPassword = await bcrypt.hash(password,10);
+        const newUser = await User.create({
+            name,
+            email,
+            password:hashPassword,
+        });
+
+        // return success message 
+        const token = genToken(newUser._id);
+        newUser.password = undefined;
+
+        return res.status(201).json({message:"User register successfully",token,user:newUser});
+
+    } catch (error) {
+        return res.status(400).json({message:error.message});
+    }
+}
+
+
+// GET :-- /api/users/login
+export const userLogin = async(req,res)=>{
+    try {
+        const {email,password} = req.body;
+        // existing user exits or not 
+        const user = await User.findOne({email});
+        if(!user){
+            return res.status(400).json({message:"User doesn't exists"});
+        }
+        // comapre password 
+        if(!user.comparePassword(password)){
+            return res.status(400).json({message:"Inavlid password"});
+        };
+
+        // token 
+        const token = genToken(user._id);
+        token.password = undefined;
+
+        return res.status(200).json({message:"User login successfully!",token,user});
+
+
+    } catch (error) {
+        return res.status(400).json({message:error.message});
+    }
+};
+
+
+// controllers for getting user by id;
+// GET :-- /api/users/data
+export const getUserById = async(req,res)=>{
+    try {
+        const userId = req.userId;
+        // cehcek if user exists 
+        const user = await User.findById(userId);
+        if(!user){
+            return res.status(404).json({message:"User not found!"});
+        }
+
+        // return user 
+        user.password = undefined;
+        return res.status(200).json({user});
+        
+    } catch (error) {
+        return res.status(400).json({message:error.message});
+    }
+}
+
+
