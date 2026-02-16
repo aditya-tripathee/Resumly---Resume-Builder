@@ -4,7 +4,11 @@ import {LockIcon, Mail, User2Icon} from "lucide-react"
 
 
 const Login = () => {
-  const [state, setState] = React.useState("login");
+  const query = new URLSearchParams(window.location.search);
+  const urlState = query.get('state');
+  
+
+  const [state, setState] = React.useState(urlState ||"login");
 
   const [formData, setFormData] = React.useState({
     name: "",
