@@ -1,6 +1,8 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Resume from "../models/Resume.js";
+
 
 // token generation 
 const genToken = (userId)=>{
@@ -90,3 +92,17 @@ export const getUserById = async(req,res)=>{
 }
 
 
+// getting user resume 
+// GET :-- /api/users/resumes
+export const getUserResume = async(req,res)=>{
+    try {
+        const userId = req.userId;// by middlewares 
+
+        // return user resume 
+        const resumes = await Resume.find({userId}); // return all reusmes of user 
+        return res.status(200).json({message:"Resumes found", resumes});
+
+    } catch (error) {
+        return res.status(400).json({message:error.message});
+    }
+}

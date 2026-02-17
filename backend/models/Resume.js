@@ -1,0 +1,50 @@
+import mongoose from "mongoose";
+
+const ResumeSchema = new mongoose.Schema({
+    userId : {type:mongoose.Schema.Types.ObjectId, ref:"User"},
+    title: {type:String, default:"untitled resume"},
+    public: {type:Boolean , default : false},
+    template: {type:String, default:"classic"},
+    accent_color : {type:String, default:"#3B82F6"},
+    professional_summary : {type:String, default:""},
+    skills: [{type:String}],
+    personal_info: {
+        image:{type:String,default:""},
+        full_name :{type:String, default:""},
+        profession: {type:String, defualt:""},
+        email: {type:String, defualt:""},
+        phone: {type:String, defualt:""},
+        location: {type:String, defualt:""},
+        linkedin: {type:String, defualt:""},
+        website: {type:String, defualt:""},
+    },
+    experience: [
+        {
+            company:{type:String},
+            position:{type:String},
+            start_date:{type:String},
+            end_date:{type:String},
+            description:{type:String},
+            isCurrent:{type:Boolean},
+        }
+    ],
+    project:[
+        {
+            name:{type:String},
+            type:{type:String},
+            description:{type:String},
+        }
+    ],
+    education:[
+        {
+            name:{type:String},
+            degree:{type:String},
+            field:{type:String},
+            graduation_date:{type:String},
+            gpa:{type:String},
+        }
+    ]
+},{timestamps:true,minimize:false});
+
+const Resume = mongoose.model("Resume",ResumeSchema);
+export default Resume;
