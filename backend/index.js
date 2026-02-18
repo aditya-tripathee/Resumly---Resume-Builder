@@ -6,11 +6,12 @@ dotenv.config();
 import userRouter from "./routes/userRoutes.js";
 import resumeRouter from "./routes/resumeRouter.js";
 import imageKit from "./config/imageKit.js";
-
+import aiRouter from "./routes/aiRoutes.js";
 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 
 // Database connection 
 await dbConnect();
@@ -22,7 +23,8 @@ app.use(cors());
 
 // Routes 
 app.use("/api/users",userRouter);
-app.use("/api/resumes",resumeRouter)
+app.use("/api/resumes",resumeRouter);
+app.use("/api/ai",aiRouter);
 
 
 
