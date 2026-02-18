@@ -1,207 +1,237 @@
+import dummy_profile from './dummy_profile.png'
+
 export const dummyResumeData = [
-  {
-    personalinfo: {
-      full_name: "Aditya Sharma",
-      email: "aditya.sharma@example.com",
-      phone: "+91-9876543210",
-      location: "Bengaluru, India",
-      linkedin: "https://www.linkedin.com/in/aditya-sharma",
-      website: "https://adityaportfolio.com",
-      profession: "Software Engineer",
-      image: "https://randomuser.me/api/portraits/men/1.jpg",
+    {
+        // ----------------------------------------------------- Resume 1 ------------------------------------------------------
+        personal_info: {
+            full_name: "Alex Smith",
+            email: "alex@example.com",
+            phone: "0 123456789",
+            location: "NY, USA",
+            linkedin: "https://www.linkedin.com",
+            website: "https://www.example.com",
+            profession: "Full Stack Developer",
+            image: dummy_profile
+        },
+        _id: "68d2a31a1c4dd38875bb037e",
+        userId: "68c180acdf1775dfd02c6d87",
+        title: "Alex's Resume",
+        public: true,
+        professional_summary: "Highly analytical Data Analyst with 6 years of experience transforming complex datasets into actionable insights using SQL, Python, and advanced visualization tools. ",
+        skills: ["JavaScript", "React JS", "Full Stack Development", "Git", "GitHub", "NextJS", "Express", "NodeJS", "TypeScript"],
+        experience: [
+            {
+                company: "Example Technologies.",
+                position: "Senior Full Stack Developer",
+                start_date: "2023-06",
+                end_date: "Present",
+                description: "Architected, developed, and deployed innovative full-stack applications at Example Technologies.\ncreating robust back-end systems and intuitive front- end interfaces to deliver meaningful digital experiences ",
+                is_current: true,
+                _id: "68d2a31a1c4dd38875bb037f"
+            },
+            {
+                company: "Example Technologies.",
+                position: "Full Stack Developer",
+                start_date: "2019-08",
+                end_date: "2023-05",
+                description: "Engineered and deployed scalable full-stack web applications for Example Technologies, translating complex requirements into robust front-end interfaces and efficient back-end services.",
+                is_current: false,
+                _id: "68d4f7abc8f0d46dc8a8b114"
+            }
+        ],
+        education: [
+            {
+                institution: "Example Institute of Technology",
+                degree: "B.TECH",
+                field: "CSE",
+                graduation_date: "2023-05",
+                gpa: "8.7",
+                _id: "68d2a31a1c4dd38875bb0380"
+            },
+            {
+                institution: "Example Public School",
+                degree: "HIGHER SECONDARY",
+                field: "PCM",
+                graduation_date: "2019-03",
+                gpa: "",
+                _id: "68d2a31a1c4dd38875bb0381"
+            },
+            {
+                institution: "Example Academy",
+                degree: "SECONDARY SCHOOL",
+                field: "",
+                graduation_date: "2017-03",
+                gpa: "",
+                _id: "68d2a31a1c4dd38875bb0382"
+            }
+        ],
+        template: "minimal-image",
+        accent_color: "#14B8A6",
+        project: [
+            {
+                name: "Team Task Management System",
+                type: "Web Application (Productivity Tool)",
+                description: "TaskTrackr is a collaborative task management system designed for teams to create, assign, track, and manage tasks in real time. ",
+                _id: "68d4f882c8f0d46dc8a8b139"
+            },
+            {
+                name: "EduHub - Online Learning Platform",
+                type: "Web Application (EdTech Platform)",
+                description: "EduHub is an online learning platform where instructors can create courses with video lessons, quizzes, and downloadable resources.",
+                _id: "68d4f89dc8f0d46dc8a8b147"
+            }
+        ],
+        updatedAt: "2025-09-23T13:39:38.395Z",
+        createdAt: "2025-09-23T13:39:38.395Z"
     },
-    _id: "resume1",
-    userId: "user1",
-    title: "Aditya Sharma",
-    createdAt: "2026-02-14T04:00:00Z",
-    updatedAt: "2026-02-14T06:00:00Z",
-    experience: [
-      {
-        company: "Tech Solutions Pvt Ltd",
-        role: "Frontend Developer",
-        startDate: "2022-01",
-        endDate: "Present",
-        description: "Developed responsive web applications using React and Redux.",
-      },
-      {
-        company: "CodeFactory",
-        role: "Intern Developer",
-        startDate: "2021-06",
-        endDate: "2021-12",
-        description: "Assisted in building internal tools with Node.js and Express.",
-      },
-    ],
-    education: [
-      {
-        institution: "Indian Institute of Technology, Delhi",
-        degree: "BTech in Computer Science",
-        startDate: "2017",
-        endDate: "2021",
-        description: "Graduated with distinction, focused on software engineering.",
-      },
-    ],
-    skills: ["JavaScript", "React", "Node.js", "CSS", "HTML", "Git"],
-    projects: [
-      {
-        name: "Job Portal App",
-        link: "https://github.com/aditya/job-portal",
-        description: "A full-stack job portal application built with MERN stack.",
-      },
-      {
-        name: "Portfolio Website",
-        link: "https://adityaportfolio.com",
-        description: "Personal portfolio website to showcase projects and resume.",
-      },
-    ],
-  },
-  {
-    personalinfo: {
-      full_name: "Sita Verma",
-      email: "sita.verma@example.com",
-      phone: "+91-9123456789",
-      location: "Mumbai, India",
-      linkedin: "https://www.linkedin.com/in/sita-verma",
-      website: "https://sitaportfolio.com",
-      profession: "UI/UX Designer",
-      image: "https://randomuser.me/api/portraits/women/2.jpg",
+    {
+        // ----------------------------------------------------- Resume 2 ------------------------------------------------------
+        personal_info: {
+            full_name: "Jordan Lee",
+            email: "jordan.lee@example.com",
+            phone: "0 987654321",
+            location: "San Francisco, CA, USA",
+            linkedin: "https://www.linkedin.com/in/jordanlee",
+            website: "https://www.jordanlee.dev",
+            profession: "Frontend Engineer",
+            image: dummy_profile
+        },
+        _id: "78e3b42c2d5ff49286cc148f",
+        userId: "78d2e0bdcf2886efg03e7e98",
+        title: "Jordan's Resume",
+        public: true,
+        professional_summary: "Creative and detail-oriented Frontend Engineer with 5+ years of experience crafting responsive, user-centric web applications using React, Vue, and modern CSS frameworks.",
+        skills: ["HTML5", "CSS3", "JavaScript", "React", "Vue.js", "SASS", "Tailwind CSS", "Figma", "Web Accessibility", "REST APIs"],
+        experience: [
+            {
+                company: "TechSpark Inc.",
+                position: "Lead Frontend Engineer",
+                start_date: "2022-02",
+                end_date: "Present",
+                description: "Leading a team of frontend developers to build accessible and scalable user interfaces. Collaborated with UX teams to implement design systems and improve frontend performance.",
+                is_current: true,
+                _id: "78e3b42c2d5ff49286cc1490"
+            },
+            {
+                company: "PixelForge Labs",
+                position: "Frontend Developer",
+                start_date: "2018-09",
+                end_date: "2022-01",
+                description: "Developed reusable UI components using React and Vue.js. Worked closely with backend teams to integrate REST APIs and optimize SPA performance.",
+                is_current: false,
+                _id: "78e3b42c2d5ff49286cc1491"
+            }
+        ],
+        education: [
+            {
+                institution: "University of Digital Arts",
+                degree: "B.Sc.",
+                field: "Computer Science",
+                graduation_date: "2018-06",
+                gpa: "3.8",
+                _id: "78e3b42c2d5ff49286cc1492"
+            },
+            {
+                institution: "Lincoln High School",
+                degree: "High School Diploma",
+                field: "Science",
+                graduation_date: "2014-05",
+                gpa: "",
+                _id: "78e3b42c2d5ff49286cc1493"
+            }
+        ],
+        template: "minimal-image",
+        accent_color: "#6366F1",
+        project: [
+            {
+                name: "FitTrack - Fitness Dashboard",
+                type: "Web Application (Health & Fitness)",
+                description: "FitTrack is a fitness analytics dashboard that allows users to log workouts, track progress, and visualize performance through interactive charts.",
+                _id: "78e3b42c2d5ff49286cc1494"
+            },
+            {
+                name: "ShopEase - E-commerce UI Kit",
+                type: "Frontend UI Kit",
+                description: "ShopEase is a modular e-commerce frontend template with ready-to-use components for product listing, cart management, and responsive navigation.",
+                _id: "78e3b42c2d5ff49286cc1495"
+            }
+        ],
+        updatedAt: "2025-09-25T15:10:21.184Z",
+        createdAt: "2025-09-25T15:10:21.184Z"
     },
-    _id: "resume2",
-    userId: "user2",
-    title: "Sita Verma",
-    createdAt: "2026-02-12T10:30:00Z",
-    updatedAt: "2026-02-13T12:45:00Z",
-    experience: [
-      {
-        company: "DesignHub",
-        role: "UI/UX Designer",
-        startDate: "2021-05",
-        endDate: "Present",
-        description: "Designed mobile and web interfaces with Figma and Adobe XD.",
-      },
-      {
-        company: "Creative Minds",
-        role: "Junior Designer",
-        startDate: "2020-01",
-        endDate: "2021-04",
-        description: "Worked on branding and web design projects for international clients.",
-      },
-    ],
-    education: [
-      {
-        institution: "National Institute of Design, Ahmedabad",
-        degree: "BDes in Interaction Design",
-        startDate: "2016",
-        endDate: "2020",
-        description: "Focused on user-centered design and usability research.",
-      },
-    ],
-    skills: ["Figma", "Adobe XD", "Sketch", "Prototyping", "User Research"],
-    projects: [
-      {
-        name: "E-commerce App Redesign",
-        link: "https://github.com/sita/ecommerce-redesign",
-        description: "Redesigned UI/UX for an Indian and US-based e-commerce platform.",
-      },
-    ],
-  },
-  {
-    personalinfo: {
-      full_name: "Rohan Patel",
-      email: "rohan.patel@example.com",
-      phone: "+1-415-555-1234",
-      location: "San Francisco, USA",
-      linkedin: "https://www.linkedin.com/in/rohan-patel",
-      website: "https://rohanportfolio.com",
-      profession: "Full Stack Developer",
-      image: "https://randomuser.me/api/portraits/men/3.jpg",
-    },
-    _id: "resume3",
-    userId: "user3",
-    title: "Rohan Patel",
-    createdAt: "2026-02-10T14:45:00Z",
-    updatedAt: "2026-02-12T09:20:00Z",
-    experience: [
-      {
-        company: "WebWorks Inc.",
-        role: "Full Stack Developer",
-        startDate: "2020-03",
-        endDate: "Present",
-        description: "Built full-stack web apps using React, Node.js, and MongoDB for international clients.",
-      },
-      {
-        company: "StartupX",
-        role: "Software Engineer Intern",
-        startDate: "2019-06",
-        endDate: "2019-12",
-        description: "Assisted in developing web solutions for fintech startups.",
-      },
-    ],
-    education: [
-      {
-        institution: "Stanford University",
-        degree: "BSc in Computer Science",
-        startDate: "2015",
-        endDate: "2019",
-        description: "Specialized in web development and cloud technologies.",
-      },
-    ],
-    skills: ["React", "Node.js", "Express", "MongoDB", "JavaScript", "HTML/CSS"],
-    projects: [
-      {
-        name: "Task Manager App",
-        link: "https://github.com/rohan/task-manager",
-        description: "A MERN stack application for task management with authentication.",
-      },
-    ],
-  },
-  {
-    personalinfo: {
-      full_name: "Maya Johnson",
-      email: "maya.johnson@example.com",
-      phone: "+44-20-7946-0123",
-      location: "London, UK",
-      linkedin: "https://www.linkedin.com/in/maya-johnson",
-      website: "https://mayaportfolio.com",
-      profession: "Data Analyst",
-      image: "https://randomuser.me/api/portraits/women/4.jpg",
-    },
-    _id: "resume4",
-    userId: "user4",
-    title: "Maya Johnson",
-    createdAt: "2026-02-11T09:15:00Z",
-    updatedAt: "2026-02-13T11:00:00Z",
-    experience: [
-      {
-        company: "DataInsights Ltd.",
-        role: "Data Analyst",
-        startDate: "2019-08",
-        endDate: "Present",
-        description: "Analyzed business data using Python, SQL, and Tableau for international clients.",
-      },
-      {
-        company: "Global Analytics",
-        role: "Junior Data Analyst",
-        startDate: "2018-01",
-        endDate: "2019-07",
-        description: "Worked on data visualization projects for European companies.",
-      },
-    ],
-    education: [
-      {
-        institution: "University of Manchester",
-        degree: "BSc in Statistics",
-        startDate: "2014",
-        endDate: "2018",
-        description: "Focused on data analysis, statistics, and visualization.",
-      },
-    ],
-    skills: ["Python", "SQL", "Tableau", "Excel", "Data Visualization"],
-    projects: [
-      {
-        name: "Sales Dashboard",
-        link: "https://github.com/maya/sales-dashboard",
-        description: "Built a Tableau dashboard to track sales and KPIs for multinational clients.",
-      },
-    ],
-  },
-];
+    {
+        // ----------------------------------------------------- Resume 3 ------------------------------------------------------
+        personal_info: {
+            full_name: "Riley Morgan",
+            email: "riley.morgan@example.com",
+            phone: "0 1122334455",
+            location: "Austin, TX, USA",
+            linkedin: "https://www.linkedin.com/in/rileymorgan",
+            website: "https://www.rileym.dev",
+            profession: "Backend Developer",
+            image: dummy_profile
+        },
+        _id: "89f4c53d3e6gg59397dd259g",
+        userId: "89e3f1cedg3997fgh14f8f09",
+        title: "Riley's Resume",
+        public: true,
+        professional_summary: "Dedicated Backend Developer with 7+ years of experience building secure, high-performance APIs and microservices using Node.js, Python, and PostgreSQL. Passionate about scalability, automation, and clean architecture.",
+        skills: ["Node.js", "Python", "PostgreSQL", "MongoDB", "Docker", "Kubernetes", "CI/CD", "Redis", "GraphQL", "AWS"],
+        experience: [
+            {
+                company: "DataNest Solutions",
+                position: "Senior Backend Engineer",
+                start_date: "2021-03",
+                end_date: "Present",
+                description: "Developed distributed microservices using Node.js and Docker. Implemented API rate limiting, authentication, and background job processing using Redis and Bull.",
+                is_current: true,
+                _id: "89f4c53d3e6gg59397dd259h"
+            },
+            {
+                company: "CloudCore Systems",
+                position: "Backend Developer",
+                start_date: "2016-07",
+                end_date: "2021-02",
+                description: "Maintained and scaled backend systems built on Python and PostgreSQL. Automated deployments with GitLab CI/CD and improved API response time by 35%.",
+                is_current: false,
+                _id: "89f4c53d3e6gg59397dd259i"
+            }
+        ],
+        education: [
+            {
+                institution: "Texas Institute of Technology",
+                degree: "B.E.",
+                field: "Information Technology",
+                graduation_date: "2016-05",
+                gpa: "3.9",
+                _id: "89f4c53d3e6gg59397dd259j"
+            },
+            {
+                institution: "Central High School",
+                degree: "High School Diploma",
+                field: "Science",
+                graduation_date: "2012-04",
+                gpa: "",
+                _id: "89f4c53d3e6gg59397dd259k"
+            }
+        ],
+        template: "minimal-image",
+        accent_color: "#F59E0B",
+        project: [
+            {
+                name: "Invoicr - Invoice Management System",
+                type: "Web Application (FinTech)",
+                description: "Invoicr is a secure web platform that allows freelancers and small businesses to generate, track, and automate professional invoices. Built with Node.js, MongoDB, and Stripe integration.",
+                _id: "89f4c53d3e6gg59397dd259l"
+            },
+            {
+                name: "API Monitor Dashboard",
+                type: "DevOps Tool",
+                description: "A real-time API monitoring dashboard for microservices. Tracks latency, uptime, and error rates using Prometheus and Grafana.",
+                _id: "89f4c53d3e6gg59397dd259m"
+            }
+        ],
+        updatedAt: "2025-09-25T15:26:49.652Z",
+        createdAt: "2025-09-25T15:26:49.652Z"
+    }
+]

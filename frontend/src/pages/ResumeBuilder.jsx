@@ -12,6 +12,9 @@ import {
   User,
 } from "lucide-react";
 import PersonalInfoForm from "../components/PersonalInfoForm";
+import ResumePreview from "../components/ResumePreview";
+import TemplateSelector from "../components/TemplateSelector";
+import ColorPeeker from "../components/ColorPeeker";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
@@ -81,24 +84,19 @@ const ResumeBuilder = () => {
                 }}
               />
               {/* section navigation */}
-              {/* <div className="flex justify-center items-center mb-6 border-b border-gray-300 py-1">
-                <div className="flex justify-between gap-5 items-center ">
-                  {activeSectionIndex != 0 && (
-                    <button onClick={()=>setActiveSectionIndex((prevIndex)=>Math.max(prevIndex-1,0))} className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600
-                     hover:bg-gray-50 transition-all" disabled={activeSectionIndex===0}>
-                         <ChevronLeft className="size-4"/> Previous
-                    </button>
-                  )}
-                  <div></div>
-                  <button onClick={()=>setActiveSectionIndex((prevIndex)=>Math.min(prevIndex+1,sections.length-1))} 
-                  className={`flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 transition-all ${activeSectionIndex === sections.length -1 && `opacity-50 `}`} disabled={activeSectionIndex===sections.length-1}>
-                         Next <ChevronRight className="size-4"/> 
-                    </button>
-                </div>
-              </div> */}
 
-              <div className="relative mb-6 border-b border-gray-300 py-1">
-                <div className="flex  justify-between items-center w-full max-w-3xl mx-auto px-4">
+              <div className="relative flex justify-between items-center mb-6 border-b border-gray-300 py-1">
+                <div className="flex justify-between items-center gap-2">
+                  <TemplateSelector
+                    selectedTemplate={resumeData.template}
+                    onChange={(template) =>
+                      setResumeData((prev) => ({ ...prev, template }))
+                    }
+                  />
+                  <ColorPeeker selectedColor={resumeData.accent_color} onChange={(color)=>setResumeData(prev=>({...prev,accent_color:color}))}/>
+                </div>
+                
+                <div className="flex  items-center ">
                   {/* Previous Button */}
                   {activeSectionIndex !== 0 && (
                     <button
@@ -141,7 +139,7 @@ const ResumeBuilder = () => {
                 {activeSection.id === "personal" && (
                   <PersonalInfoForm
                     data={resumeData.personal_info}
-                    onChnage={(data) =>
+                    onChange={(data) =>
                       setResumeData((prev) => ({
                         ...prev,
                         personal_info: data,
@@ -156,7 +154,15 @@ const ResumeBuilder = () => {
           </div>
 
           {/* RIGHT PANEL - PREVIEW OF OUR RESUME */}
-          <div></div>
+          <div className="lg:col-span-7 max-lg:mt-6">
+            <div className="">{/* buttons */}</div>
+            {/* resume preview */}
+            <ResumePreview
+              data={resumeData}
+              template={resumeData.template}
+              accentColor={resumeData.accent_color}
+            />
+          </div>
         </div>
       </div>
     </div>
