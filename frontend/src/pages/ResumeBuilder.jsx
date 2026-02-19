@@ -15,6 +15,8 @@ import PersonalInfoForm from "../components/PersonalInfoForm";
 import ResumePreview from "../components/ResumePreview";
 import TemplateSelector from "../components/TemplateSelector";
 import ColorPeeker from "../components/ColorPeeker";
+import ProfessionalSummary from "../components/ProfessionalSummary";
+import Experience from "../components/Experience";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
@@ -93,9 +95,17 @@ const ResumeBuilder = () => {
                       setResumeData((prev) => ({ ...prev, template }))
                     }
                   />
-                  <ColorPeeker selectedColor={resumeData.accent_color} onChange={(color)=>setResumeData(prev=>({...prev,accent_color:color}))}/>
+                  <ColorPeeker
+                    selectedColor={resumeData.accent_color}
+                    onChange={(color) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        accent_color: color,
+                      }))
+                    }
+                  />
                 </div>
-                
+
                 <div className="flex  items-center ">
                   {/* Previous Button */}
                   {activeSectionIndex !== 0 && (
@@ -147,6 +157,28 @@ const ResumeBuilder = () => {
                     }
                     removeBackground={removeBackground}
                     setRemoveBackground={setRemoveBackground}
+                  />
+                )}
+
+                {activeSection.id === "summary" && (
+                  <ProfessionalSummary
+                    data={resumeData.professional_summary}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        professional_summary: data,
+                      }))
+                    }
+                    setResumeData={setResumeData}
+                  />
+                )}
+
+                {activeSection.id === "experience" && (
+                  <Experience
+                    data={resumeData.experience}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({ ...prev, experience: data }))
+                    }
                   />
                 )}
               </div>
