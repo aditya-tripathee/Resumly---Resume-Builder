@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { dummyResumeData } from "../assets/assetsFile";
 import {
   ArrowLeftIcon,
+  Briefcase,
   ChevronLeft,
   ChevronRight,
   FileText,
@@ -17,6 +18,8 @@ import TemplateSelector from "../components/TemplateSelector";
 import ColorPeeker from "../components/ColorPeeker";
 import ProfessionalSummary from "../components/ProfessionalSummary";
 import Experience from "../components/Experience";
+import Education from "../components/Education";
+import ProjectForm from "../components/ProjectForm";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
@@ -48,9 +51,9 @@ const ResumeBuilder = () => {
   const sections = [
     { id: "personal", name: "Personal info", icon: User },
     { id: "summary", name: "Summary", icon: FileText },
-    { id: "experience", name: "Experience", icon: GraduationCap },
+    { id: "experience", name: "Experience", icon: Briefcase },
+    { id: "education", name: "Education", icon: GraduationCap },
     { id: "project", name: "Project", icon: FolderIcon },
-    { id: "skills", name: "Skills", icon: Sparkles },
     { id: "skills", name: "Skills", icon: Sparkles },
   ];
 
@@ -178,6 +181,24 @@ const ResumeBuilder = () => {
                     data={resumeData.experience}
                     onChange={(data) =>
                       setResumeData((prev) => ({ ...prev, experience: data }))
+                    }
+                  />
+                )}
+
+                {activeSection.id === "education" && (
+                  <Education
+                    data={resumeData.education}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({ ...prev, education: data }))
+                    }
+                  />
+                )}
+
+                {activeSection.id === "project" && (
+                  <ProjectForm
+                    data={resumeData.project}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({ ...prev, project: data }))
                     }
                   />
                 )}
