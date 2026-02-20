@@ -7,3 +7,27 @@
 
 }
 
+@media print {
+  body {
+    margin: 0;
+  }
+
+  #resume {
+    width: 210mm;       /* A4 width */
+    min-height: 297mm;  /* A4 height */
+    padding: 10mm;
+    font-size: 12px;    /* Font chhota */
+  }
+
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+}
+
+@media print {
+  #resume {
+    transform: scale(0.9);
+    transform-origin: top left;
+  }
+}

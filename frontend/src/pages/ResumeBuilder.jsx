@@ -6,9 +6,14 @@ import {
   Briefcase,
   ChevronLeft,
   ChevronRight,
+  DownloadIcon,
+  EyeClosed,
+  EyeIcon,
+  EyeOffIcon,
   FileText,
   FolderIcon,
   GraduationCap,
+  Share2Icon,
   Sparkles,
   User,
 } from "lucide-react";
@@ -20,6 +25,7 @@ import ProfessionalSummary from "../components/ProfessionalSummary";
 import Experience from "../components/Experience";
 import Education from "../components/Education";
 import ProjectForm from "../components/ProjectForm";
+import Skills from "../components/Skills";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
@@ -62,6 +68,26 @@ const ResumeBuilder = () => {
   useEffect(() => {
     loadingExistingResume();
   }, []);
+
+  const changeResumeVisibility = async()=>{
+    setResumeData({...resumeData,public:!resumeData.public})
+  }
+
+  const handleShare = ()=>{
+     const frontendUrl = window.location.href.split('/app/')[0];
+     const resumeUrl = frontendUrl+'/view/'+resumeId;
+     if(navigator.share){
+      navigator.share({url:resumeUrl,text:"my-resume",})
+     }
+     else{
+      alert("Share not supported on this browser");
+     }
+  }
+
+  const downloadResume = () =>{
+    window.print();
+
+  }
 
   return (
     <div>
@@ -202,13 +228,54 @@ const ResumeBuilder = () => {
                     }
                   />
                 )}
+
+                {activeSection.id === "skills" && (
+                  <Skills
+                    data={resumeData.skills}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({ ...prev, skills: data }))
+                    }
+                  />
+                )}
               </div>
+              <button className="mt-6 cursor-pointer text-sm transition-all bg-gradient-to-br  from-indigo-100 to-indigo-200 ring-indigo-300 font-medium hover:bg-indigo-900 text-indigo-700  px-6 py-2 rounded-lg">
+                Save Chnages
+              </button>
             </div>
           </div>
 
           {/* RIGHT PANEL - PREVIEW OF OUR RESUME */}
           <div className="lg:col-span-7 max-lg:mt-6">
-            <div className="">{/* buttons */}</div>
+            <div className="relative w-full ">
+              <div className="absolute bottom-3 left-0 right-0 flex items-center justify-end gap-2">
+                {resumeData.public && (
+                  <button onClick={handleShare} 
+                  className="flex items-center px-5 p-2.5 cursor-pointer hover:ring hover:border-indigo-600 font-semibold gap-2 
+                text-xs bg-gradient-to-br from-indigo-200 to-indigo-300 text-indigo-600 rounded-lg ring-indigo-400 transition-colors">
+                    <Share2Icon className="size-4" /> Share
+                  </button>
+                )}
+                <button
+                  onClick={changeResumeVisibility}
+                  className="flex items-center px-4 p-2 gap-2 text-xs cursor-pointer font-semibold 
+                bg-gradient-to-br from-indigo-200  to-indigo-300 text-indigo-600 ring-indigo-400 rounded-lg hover:ring transition-colors"
+                >
+                  {resumeData.public ? (
+                    <EyeIcon className="size-5" />
+                  ) : (
+                    <EyeOffIcon className="size-5" />
+                  )}
+                  {resumeData.public ? "Public" : "Private"}
+                </button>
+                <button id="resume"
+                  onClick={downloadResume}
+                  className="flex items-center px-5 p-2.5 cursor-pointer hover:ring hover:border-indigo-600 font-semibold gap-2 
+                text-xs bg-gradient-to-br from-indigo-200 to-indigo-300 text-indigo-600 rounded-lg ring-indigo-400 transition-colors"
+                >
+                  <DownloadIcon className=" size-4" /> Download
+                </button>
+              </div>
+            </div>
             {/* resume preview */}
             <ResumePreview
               data={resumeData}
