@@ -1,14 +1,16 @@
 import React from "react";
-import {LockIcon, Mail, User2Icon} from "lucide-react"
-
-
+import { LockIcon, Mail, User2Icon } from "lucide-react";
+import api from "../config/app";
+import { useDispatch } from "react-redux";
+import { login } from "../app/features/authSlice";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const query = new URLSearchParams(window.location.search);
-  const urlState = query.get('state');
-  
+  const urlState = query.get("state");
 
-  const [state, setState] = React.useState(urlState ||"login");
+  const [state, setState] = React.useState(urlState || "login");
 
   const [formData, setFormData] = React.useState({
     name: "",
@@ -16,8 +18,22 @@ const Login = () => {
     password: "",
   });
 
+  // Login ke liye sirf email + password bhejo
+  const payload =
+    state === "login"
+      ? { email: formData.email, password: formData.password }
+      : formData;
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const { data } = await api.post(`/api/users/${state}`, payload);
+      dispatch(login(data));
+      localStorage.setItem("token", data.token);
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error);
+      toast(error?.response?.data?.message || error.message);
+    }
   };
 
   const handleChange = (e) => {
@@ -37,7 +53,7 @@ const Login = () => {
         <p className="text-gray-500 text-sm mt-2">Please sign in to continue</p>
         {state !== "login" && (
           <div className="flex items-center mt-6 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
-            <User2Icon size={16} color="#6B7280"/>
+            <User2Icon size={16} color="#6B7280" />
             <input
               type="text"
               name="name"
@@ -50,7 +66,7 @@ const Login = () => {
           </div>
         )}
         <div className="flex items-center w-full mt-4 bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
-          <Mail size={13} color="#6B7280"/>
+          <Mail size={13} color="#6B7280" />
           <input
             type="email"
             name="email"
@@ -62,7 +78,7 @@ const Login = () => {
           />
         </div>
         <div className="flex items-center mt-4 w-full bg-white border border-gray-300/80 h-12 rounded-full overflow-hidden pl-6 gap-2">
-          <LockIcon size={13} color="#6B7280"/>
+          <LockIcon size={13} color="#6B7280" />
           <input
             type="password"
             name="password"

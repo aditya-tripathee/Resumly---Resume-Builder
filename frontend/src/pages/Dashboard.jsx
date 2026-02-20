@@ -20,6 +20,7 @@ function Dashboard() {
   const loadAllResumes = async () => {
     setAllResumes(dummyResumeData);
   };
+  
   const createResume = async(e)=>{
     e.preventDefault();
     setShowCreateResume(false);
