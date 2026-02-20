@@ -45,31 +45,38 @@ export const registerUser = async(req,res)=>{
 
 
 // GET :-- /api/users/login
-export const userLogin = async(req,res)=>{
-    try {
-        const {email,password} = req.body;
-        // existing user exits or not 
-        const user = await User.findOne({email});
-        if(!user){
-            return res.status(400).json({message:"User doesn't exists"});
-        }
-        // comapre password 
-        if(!user.comparePassword(password)){
-            return res.status(400).json({message:"Inavlid password"});
-        };
 
-        // token 
-        const token = genToken(user._id);
-        token.password = undefined;
+export const userLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-        return res.status(200).json({message:"User login successfully!",token,user});
-
-
-    } catch (error) {
-        return res.status(400).json({message:error.message});
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ message: "User doesn't exist" });
     }
-};
 
+    // Compare password (async)
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
+
+    // Generate token
+    const token = genToken(user._id);
+
+    // Hide password in response
+    user.password = undefined;
+
+    return res.status(200).json({
+      message: "User login successfully!",
+      token,
+      user,
+    });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
 
 // controllers for getting user by id;
 // GET :-- /api/users/data
