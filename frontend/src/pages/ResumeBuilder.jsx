@@ -26,9 +26,16 @@ import Experience from "../components/Experience";
 import Education from "../components/Education";
 import ProjectForm from "../components/ProjectForm";
 import Skills from "../components/Skills";
+import {useSelector} from "react-redux";
+import api from "../config/app";
+import {toast} from "react-hot-toast";
+
+
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
+  const {token} = useSelector(state=>state.auth);
+
   const [resumeData, setResumeData] = useState({
     _id: "",
     title: "",
@@ -47,10 +54,16 @@ const ResumeBuilder = () => {
   const [removeBackground, setRemoveBackground] = useState(false);
 
   const loadingExistingResume = async () => {
-    const resume = dummyResumeData.find((resume) => resume._id === resumeId);
-    if (resume) {
-      setResumeData(resume);
-      document.title = resume.title;
+    try {
+      const {data} = await api.get(`/api/resumes/get/${resumeId}`,{headers:{
+        Authorization:token
+      }});
+      if(data.resume){
+        setResumeData(data.resume);
+        document.title = data.resume.title;
+      }
+    } catch (error) {
+      console.log(error.message)
     }
   };
 
@@ -70,8 +83,21 @@ const ResumeBuilder = () => {
   }, []);
 
   const changeResumeVisibility = async()=>{
-    setResumeData({...resumeData,public:!resumeData.public})
+    try {
+      const formData = new FormData();
+      formData.append("resumeId",resumeId);
+      formData.append("resumeData",JSON.stringify({public:!resumeData.public}));
+       const {data} = await api.get(`/api/resumes/update`,formData, {headers:{
+        Authorization:token
+      }});
+      setResumeData({...resumeData, public:!resumeData.public});
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error.message);
+    }
   }
+
+
 
   const handleShare = ()=>{
      const frontendUrl = window.location.href.split('/app/')[0];
@@ -87,6 +113,29 @@ const ResumeBuilder = () => {
   const downloadResume = () =>{
     window.print();
 
+  }
+
+  const saveResume = async()=>{
+    try {
+       let updateResumeData = structuredClone(resumeData);
+      //  remove image update
+      if(typeof resumeData.personal_info.image === "object"){
+        delete updateResumeData.personal_info.image;
+      }
+      const formData = new FormData();
+      formData.append("resumeId",resumeId);
+      formData.append("resumeData",JSON.stringify(updateResumeData));
+      removeBackground && formData.append("removeBackground","yes");
+      typeof resumeData.personal_info.image === "object" && formData.append("image",resumeData.personal_info.image);
+
+      const {data} = await api.put(`api/resumes/update`,formData,{headers:{
+        Authorization:token
+      }});
+      setResumeData(data.resume);
+      toast.success(data.message);
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
   return (
@@ -238,7 +287,9 @@ const ResumeBuilder = () => {
                   />
                 )}
               </div>
-              <button className="mt-6 cursor-pointer text-sm transition-all bg-gradient-to-br  from-indigo-100 to-indigo-200 ring-indigo-300 font-medium hover:bg-indigo-900 text-indigo-700  px-6 py-2 rounded-lg">
+              <button
+               onClick={()=>{toast.promise(saveResume,{loading:'Saving..'})}}
+               className="mt-6 cursor-pointer text-sm transition-all bg-gradient-to-br  from-indigo-100 to-indigo-200 ring-indigo-300 font-medium hover:bg-indigo-900 text-indigo-700  px-6 py-2 rounded-lg">
                 Save Chnages
               </button>
             </div>
