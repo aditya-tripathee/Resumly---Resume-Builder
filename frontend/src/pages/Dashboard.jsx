@@ -64,24 +64,8 @@ function Dashboard() {
   };
 
   const uploadResume = async (e) => {
-    e.preventDefault();
-    if (!resume) return toast.error("Select a PDF first");
-    setIsLoading(true);
-    try {
-      const resumeText = await pdfToText(resume); // frontend text extract
-      const { data } = await api.post(
-        `/api/ai/upload-resume`,
-        { title, resumeText },
-        { headers: { Authorization: token } },
-      );
-      setTitle("");
-      setResume(null);
-      setShowUploadResume(false);
-      navigate(`/app/builder/${data.resumeId}`);
-    } catch (error) {
-      toast.error(error?.response?.data?.message || "Upload failed");
-    }
-    setIsLoading(false);
+     e.preventDefault();
+      toast("This feature will be coming soon 🚀")
   };
 
   const editTitle = async (e) => {
@@ -162,7 +146,8 @@ function Dashboard() {
           </p>
         </button>
         <button
-          onClick={() => setShowUploadResume(true)}
+          // onClick={() => setShowUploadResume(true)}
+          onClick={uploadResume}
           className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center 
         justify-center rounded-lg gap-2 text-slate-600 border border- border-dashed border-slate-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
         >

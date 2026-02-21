@@ -87,7 +87,7 @@ const ResumeBuilder = () => {
       const formData = new FormData();
       formData.append("resumeId",resumeId);
       formData.append("resumeData",JSON.stringify({public:!resumeData.public}));
-       const {data} = await api.get(`/api/resumes/update`,formData, {headers:{
+       const {data} = await api.put(`/api/resumes/update`,formData, {headers:{
         Authorization:token
       }});
       setResumeData({...resumeData, public:!resumeData.public});

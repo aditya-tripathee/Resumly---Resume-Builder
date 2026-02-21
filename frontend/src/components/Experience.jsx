@@ -1,8 +1,13 @@
-
-import React from "react";
-import { Briefcase, Plus, Sparkles, Trash2 } from "lucide-react";
+import React, { useState } from "react";
+import { Briefcase, Loader2, Plus, Sparkles, Trash2 } from "lucide-react";
+import { useSelector } from "react-redux";
+import api from "../config/app";
+import toast from "react-hot-toast";
 
 const Experience = ({ data = [], onChange }) => {
+  const { token } = useSelector((state) => state.auth);
+  const [generatingIndex, setGeneratingIndex] = useState(-1);
+
   const addExperience = () => {
     const newExperience = {
       company: "",
@@ -28,14 +33,33 @@ const Experience = ({ data = [], onChange }) => {
 
   const handleCheckboxChange = (index, checked) => {
     const updated = [...data];
-
     updated[index] = {
       ...updated[index],
       is_current: checked,
       end_date: checked ? "" : updated[index].end_date,
     };
-
     onChange(updated);
+  };
+
+  const generateDescription = async (index) => {
+    setGeneratingIndex(index);
+    const experience = data[index];
+    const prompt = `Enhance this job description: "${experience.description}" for the position of ${experience.position} at ${experience.company}.`;
+
+    try {
+      const { data: resData } = await api.post(
+        `/api/ai/enhance-job-des`,
+        { userContent: prompt },
+        { headers: { Authorization: token } }
+      );
+
+      // ✅ Fixed typo here
+      updateExperience(index, "description", resData.enhanceContent);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error.message);
+    } finally {
+      setGeneratingIndex(-1);
+    }
   };
 
   return (
@@ -45,17 +69,15 @@ const Experience = ({ data = [], onChange }) => {
           <h3 className="text-lg font-semibold text-gray-900">
             Professional Experience
           </h3>
-          <p className="text-sm text-gray-500">
-            Add your job experience
-          </p>
+          <p className="text-sm text-gray-500">Add your job experience</p>
         </div>
 
         <button
           type="button"
           onClick={addExperience}
           className="flex items-center gap-2 px-3 py-1 text-sm 
-          bg-purple-100 text-purple-800 hover:bg-purple-400 
-          rounded-lg border border-purple-800 transition-colors"
+            bg-purple-100 text-purple-800 hover:bg-purple-400 
+            rounded-lg border border-purple-800 transition-colors"
         >
           <Plus className="size-4" />
           Add Experience
@@ -66,9 +88,7 @@ const Experience = ({ data = [], onChange }) => {
         <div className="text-center py-8 text-gray-500">
           <Briefcase className="w-12 h-12 mx-auto mb-3 text-gray-300" />
           <p>No work experience added yet.</p>
-          <p className="text-sm">
-            Click "Add Experience" to get started.
-          </p>
+          <p className="text-sm">Click "Add Experience" to get started.</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -78,10 +98,7 @@ const Experience = ({ data = [], onChange }) => {
               className="p-4 border border-gray-200 rounded-lg space-y-3"
             >
               <div className="flex justify-between items-start">
-                <h4 className="font-medium">
-                  Experience #{index + 1}
-                </h4>
-
+                <h4 className="font-medium">Experience #{index + 1}</h4>
                 <button
                   type="button"
                   onClick={() => removeExperience(index)}
@@ -131,7 +148,6 @@ const Experience = ({ data = [], onChange }) => {
                   className="px-3 py-2 text-sm rounded-lg border border-gray-400 disabled:bg-gray-100"
                 />
 
-                {/* ✅ Fixed Checkbox */}
                 <div className="flex items-center gap-2 col-span-2">
                   <input
                     type="checkbox"
@@ -147,10 +163,32 @@ const Experience = ({ data = [], onChange }) => {
                 </div>
 
                 <div className="col-span-2">
-                  <label className="text-sm font-medium text-gray-700">
-                    Job Description
-                  </label>
-                  
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="text-[15px] font-medium text-gray-700">
+                      Job Description
+                    </label>
+
+                    <button
+                      onClick={() => generateDescription(index)}
+                      disabled={
+                        generatingIndex === index ||
+                        !experience.position ||
+                        !experience.company
+                      }
+                      className="flex items-center gap-2 px-2 py-1
+                        text-sm bg-purple-100 text-purple-800 
+                        hover:bg-purple-400 rounded-lg 
+                        border border-purple-800 transition-colors 
+                        disabled:opacity-50 cursor-pointer"
+                    >
+                      {generatingIndex === index ? (
+                        <Loader2 className="animate-spin size-4 " />
+                      ) : (
+                        <Sparkles className="size-4 cursor-pointer" />
+                      )}
+                      Enhance with AI
+                    </button>
+                  </div>
 
                   <textarea
                     rows={4}
