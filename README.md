@@ -1,163 +1,121 @@
-# Resumly
 
-> ⚙️ A full-stack resume builder application with React/Vite on the frontend and an Express/MongoDB API on the backend.
+# Resumly — Resume Builder
 
-This repository contains two separate projects—`frontend` and `backend`—that work together to let users create, save, and preview resumes. The backend handles user authentication and data storage, while the frontend provides a responsive UI for building and viewing resumes.
+Resumly is a full-stack resume builder application. The project includes a React + Vite frontend and a Node.js backend (Express) that persists data to MongoDB.
 
----
+## Table of contents
 
-## 🗂 Project Structure
+- Project overview
+- Tech stack
+- Repo structure
+- Prerequisites
+- Setup and running (backend & frontend)
+- Environment variables
+- Deployment
+- Contributing
+- License & contact
 
-```
-/resumly
-├── backend          # Express API
-│   ├── config       # DB connection
-│   ├── controllers  # Route handlers
-│   ├── middlewares  # Auth middleware
-│   ├── models       # Mongoose schemas
-│   ├── routes       # Express routers
-│   ├── index.js     # Entry point
-│   └── package.json
-├── frontend         # React + Vite app
-│   ├── public
-│   ├── src          # components, pages, assets
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-└── README.md        # <-- you are here
-```
+## Project overview
 
----
+Resumly helps users create, preview and export professional resumes. The frontend contains forms and preview UIs while the backend exposes REST APIs to create and manage user resumes.
 
-## 🚀 Getting Started
+## Tech stack
 
-You can run the backend and frontend independently. Open two terminals (or tabs) and follow the instructions below.
+- Frontend: React, Vite
+- Backend: Node.js, Express
+- Database: MongoDB (via Mongoose)
 
-### 🧩 Prerequisites
+## Repo structure (high level)
 
-- Node.js 18+ and npm or yarn
-- MongoDB instance (local or cloud)
+- `backend/` — Express server, controllers, models, routes, upload handling
+- `frontend/` — React + Vite app (UI, pages, components)
+- `uploads/` — uploaded assets (images, user files)
 
-### 🔧 Environment Variables
+See `frontend/README.md` for frontend-specific details: [frontend/README.md](frontend/README.md)
 
-Create a `.env` file in the `backend` folder with the following keys:
+## Prerequisites
 
-```
-PORT=3000
-MONGODB_URI=mongodb://localhost:27017
-JWT_SECRET_KEY=your_secret_key
-```
+- Node.js 18+ (or compatible LTS)
+- npm (or yarn)
+- MongoDB instance or MongoDB Atlas cluster
 
-The frontend currently uses hardcoded dummy data and will later call the backend API at `http://localhost:3000` by default. Adjust `proxy` or `API` URL in the React code if needed.
+## Backend — setup & run
 
----
-
-## 📁 Backend (API)
-
-### 🛠 Installation
+1. Install dependencies
 
 ```bash
 cd backend
-npm install          # or yarn
+npm install
 ```
 
-### ▶️ Start Server
+2. Configure environment
+
+Create a `.env` file in the `backend` directory with at least the following variables:
+
+```
+MONGODB_URI=mongodb://localhost:27017
+PORT=5000
+JWT_SECRET=your_jwt_secret
+```
+
+Notes:
+- The backend `dbConnect` expects `MONGODB_URI` and will append the project database name `resumly` automatically.
+
+3. Start the server (development)
 
 ```bash
-npm run dev          # if using nodemon or node index.js
-# or
-node index.js
+npm run dev
 ```
 
-The server listens on `PORT` (3000 by default) and connects to MongoDB using `MONGODB_URI`.<br/>
-You can verify it with a GET request to `/`.
+4. Production
 
-### 🔌 Endpoints
+```bash
+npm start
+```
 
-| Method | Path               | Description                      | Auth required |
-|--------|--------------------|----------------------------------|---------------|
-| POST   | `/api/users/register` | Register a new user             | No            |
-| GET    | `/api/users/login`    | Log in an existing user (email & password in request body) | No            |
-| GET    | `/api/users/data`     | Fetch current user’s profile    | Yes (Bearer token)
+## Frontend — setup & run
 
-> **Note:** Tokens are JWTs signed with `JWT_SECRET_KEY` and expire in 7 days.
+Refer to the frontend README for full instructions: [frontend/README.md](frontend/README.md)
 
-### 🗃 Database Models
-
-- **User**: stores `name`, `email`, and hashed `password`.<br/>
-  The schema also contains a method `comparePassword` for authentication.
-
-- **Resume**: _(currently empty)_ intended to hold resume data per user.
-
----
-
-## 🎨 Frontend (React + Vite)
-
-### 🛠 Installation
+Quick start:
 
 ```bash
 cd frontend
-npm install          # or yarn
+npm install
+npm run dev
 ```
 
-### ▶️ Start Development Server
+If the frontend needs to call the backend locally, set `VITE_API_BASE_URL` in `frontend/.env` (example):
 
-```bash
-npm run dev          # launches vite dev server at http://localhost:5173
+```
+VITE_API_BASE_URL=http://localhost:5000/api
 ```
 
-### 🧱 Features & Pages
+## Environment variables summary
 
-- **Home**: marketing landing page with banner, features, testimonials, etc.
-- **Login / Register**: forms for user authentication (backend integration pending).
-- **Dashboard**: list of saved resumes (uses dummy data currently).
-- **Resume Builder**: interactive form (personal info, experience, education, etc.) with live preview.
-- **Preview**: view a finished resume.
+- Backend (`backend/.env`)
+	- `MONGODB_URI` — base connection string (no DB name required)
+	- `PORT` — server port (default 5000)
+	- `JWT_SECRET` — secret for signing auth tokens
 
-### 🗂 Notable Components
+- Frontend (`frontend/.env`)
+	- `VITE_API_BASE_URL` — base URL for API calls (Vite requires `VITE_` prefix)
 
-- `Navbar.jsx`, `PersonalInfoForm.jsx`, layout components, and various home page widgets.
-- `Banner`, `Hero`, `Features`, etc. under `frontend/src/components/home`.
+## Deployment
 
-> The frontend currently fetches demo data from `src/assets/assetsFile.js`. Real API calls to the backend can be added by replacing these with `fetch`/`axios` requests and updating state accordingly.
+- Build the frontend with `cd frontend && npm run build` and deploy the `dist/` folder to static hosts (Vercel, Netlify, S3, etc.).
+- Deploy the backend to any Node-friendly host (Heroku, Railway, Render, VPS) and ensure the `MONGODB_URI` points to a production-ready MongoDB instance.
 
----
+## Contributing
 
-## 🧪 Testing
+- Fork the repo, create a branch, make changes, and open a pull request against `main`.
+- Keep frontend and backend changes scoped to their respective folders.
 
-_No dedicated tests are included yet._ You can add Jest/React Testing Library for the frontend and Jest/Mocha for the backend in future updates.
+## License & Contact
 
----
-
-## 📦 Scripts Summary
-
-```bash
-# backend (in backend/)
-npm install      # install dependencies
-npm run dev       # start with nodemon (if configured)
-node index.js     # start normally
-
-# frontend (in frontend/)
-npm install      # install dependencies
-npm run dev       # start Vite dev server
-npm run build     # production build
-npm run preview   # serve the production build
-```
+Include your preferred license here and contact info (email or GitHub handle) for contributors.
 
 ---
-
-## 💡 Tips
-
-- Keep the backend server running when developing the frontend to enable API integration.
-- Use tools like Postman or cURL to test backend routes manually.
-- Update CORS settings in `backend/index.js` if you host frontend separately.
-
----
-
-## 📄 License
-
-This project is open-source. Feel free to use and modify it!
-
----
+Generated README for the Resumly project. Customize details (license, contact, exact scripts) as needed.
 
 Happy building! 👩‍💻👨‍💻
