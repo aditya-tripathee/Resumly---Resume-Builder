@@ -15,11 +15,12 @@ export const createResume = async (req, res) => {
     // return sucess message
     return res
       .status(201)
-      .json({ message: "Resume created successfully", newResume });
+      .json({ message: "Resume created successfully", resume:newResume });
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
 };
+
 
 // controller for deleting resume
 // delete :-- api/resumes/delete

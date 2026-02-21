@@ -42,9 +42,11 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
-                <p className="py-4 text-center border-t mt-6 border-slate-200">
-                    Copyright 2025 © Resumly All Rights Reserved.
+               <div>
+                 <p className="py-4 text-center border-t mt-6 border-slate-200">
+                    Copyright {new Date().getFullYear()} © Resumly All Rights Reserved.
                 </p>
+               </div>
             </footer>
         </>
     );

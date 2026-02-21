@@ -1,3 +1,4 @@
+
 import ai from "../config/ai.js";
 import Resume from "../models/Resume.js";
 
@@ -68,9 +69,11 @@ export const enhanceJobDescription = async (req, res) => {
 // api/api/upload-resume
 export const uploadResume = async (req, res) => {
   try {
+    console.log(req.body);
+    console.log(res.body)
     const { resumeText, title } = req.body;
     const userId = req.userId;
-    if (!resumeText) {
+    if (!resumeText || !title) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
@@ -121,24 +124,41 @@ export const uploadResume = async (req, res) => {
          }
     `;
 
+    // const response = await ai.chat.completions.create({
+    //   model: process.env.GEMINI_MODEL,
+    //   messages: [
+    //     {
+    //       role: "system",
+    //       content: systemPrompt,
+    //     },
+    //     {
+    //       role: "user",
+    //       content: userPrompt,
+    //     },
+    //   ],
+    //   response_format: { type: "json-object" },
+    // });
+
+    // const extractedData = response.choices[0].message.content;
+    // const parseData = JSON.parse(extractedData);
+    // const newResume = await Resume.create({ userId, title, ...parseData });
+
+    
     const response = await ai.chat.completions.create({
       model: process.env.GEMINI_MODEL,
       messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: userPrompt,
-        },
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
       ],
       response_format: { type: "json-object" },
     });
 
     const extractedData = response.choices[0].message.content;
     const parseData = JSON.parse(extractedData);
+
     const newResume = await Resume.create({ userId, title, ...parseData });
+    return res.json({ resumeId: newResume._id });
+
 
     return res.json({ resumeId: newResume._id });
   } catch (error) {

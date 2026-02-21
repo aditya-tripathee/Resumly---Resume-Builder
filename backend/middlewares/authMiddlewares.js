@@ -14,4 +14,3 @@ export const protect = async(req,res,next)=>{
         return res.status(400).json({message:"Unauthorized"});
     }
 }
-

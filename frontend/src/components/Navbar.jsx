@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <div className="shadow bg-white">
       <nav className=" flex items-center justify-between max-w-7xl mx-auto px-4 py-3.5 text-slate-800 transition-all">
-        <Link className="flex items-center">
+        <Link to={"/"} className="flex items-center">
           <img src="/resumly.png" alt="logo" className="h-11 w-auto" />
           <span className="text-pink-500 font-bold pl-1 text-2xl">Res</span><span className="text-2xl text-blue-700 font-bold">umly</span>
         </Link>
