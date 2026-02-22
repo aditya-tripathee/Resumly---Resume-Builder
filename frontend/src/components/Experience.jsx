@@ -108,7 +108,7 @@ const Experience = ({ data = [], onChange }) => {
                 </button>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <input
                   type="text"
                   placeholder="Company Name"
