@@ -66,7 +66,7 @@ const ProjectForm = ({ data, onChange }) => {
                 </button>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-3">
+              <div className="grid md:grid-cols-2 grid-cols-1 gap-3">
                 <input
                   type="text"
                   placeholder="Project Name"
